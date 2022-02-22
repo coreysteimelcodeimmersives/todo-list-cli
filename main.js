@@ -130,8 +130,8 @@ function askToCreatToDoItem(){
 
 function addItemToDoList(str){
     if (toDoArray[0][0] === ''){
-        toDoArray[toDoArray.length-1][0] = str;
-        toDoArray[toDoArray.length-1][1] = false;
+        toDoArray[0][0] = str;
+        toDoArray[0][1] = false;
     } else {
         toDoArray.push([]);
         toDoArray[toDoArray.length - 1][0] = str;
