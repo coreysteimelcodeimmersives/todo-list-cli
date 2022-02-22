@@ -1,29 +1,188 @@
 const prompt = require('prompt-sync')({sigint:true});
-console.log('\n');1
-console.log('Welcome to the To-Do List Manager Application!');
-console.log('\n');
-console.log('==============================================');
-console.log('\n');
-console.log('Your to-do list is empty.');
-console.log('\n');
-console.log('~ Seelect an action ~');
-console.log('[1] Create a to-do item');
-console.log('[2] Complete a to-do item');
 
-let userAction = prompt('> ');
+function welcome() {
+    console.log('\n');1
+    console.log('Welcome to the To-Do List Manager Application!');
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('Your to-do list is empty.');
+    console.log('\n');
+    return;
+};
 
-let toDoItem = '';
+function selectAnAction(){
+    console.log('~ Select an action ~');
+    console.log('[1] Create a to-do item');
+    console.log('[2] Complete a to-do item');
+    console.log('[Ctrl + C] To quit the program')
+    userDecision = prompt('> ');
+    return userAction(userDecision);
+}
 
-let isComplete = true;
+function userAction(str){
+    if (str === '1'){
+        toDoItem = askToCreatToDoItem();
+        toDoArray = addItemToDoList(toDoItem);
+    } else if (str === '2' && toDoArray[0][0] === ''){
+        exceptionNoItems();
+    } else if (str === '2' && toDoArray[0][0] !== ''){
+        completeAnItem();
+    }else {
+        exceptionInvalidInput();
+    }
+}
 
-let toDoArray = [['ex', isComplete]];
+function completeAnItem(){
+    checkIfAllItemsAreComplete();
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('~ Completing a to-do item ~');
+    displayToDoList();
+    console.log('Which to-do item would you like to complete?')
+    itemNumberString = prompt('> ');
+    itemNumber = Number(itemNumberString);
+    if (itemNumber > toDoArray.length){
+        exceptionItemDoesNotExist()
+    } else if (itemNumber > 0 && itemNumber <= toDoArray.length){
+        writeItemComplete(itemNumber);
+    } else if (itemNumber > toDoArray.length){
+        exceptionItemDoesNotExist();
+    } else {
+        exceptionInvalidCompletionEntry();
+    }
+    displayToDoList();
+    checkIfAllItemsAreComplete();
+    selectAnAction();
+}
 
-if (userAction = '1'){
+function writeItemComplete(num){
+    toDoArray[num-1][1] = true;
+}
+
+function checkIfAllItemsAreComplete(){
+    for(let i = 0; i < toDoArray.length; i++){
+        if (toDoArray[i][1] === false){
+            return;
+        } else {
+            console.log('Congratulations, you have completed all the items on your to-do list!');
+            console.log('You can now add a new item to your to-do list');
+            console.log('\n');
+            console.log('==============================================');
+            console.log('\n');
+            return selectAnAction();
+        }
+    }
+}
+
+function exceptionItemDoesNotExist(){
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('Error: That Item does not exist');
+    console.log('Please choose an item from your to-do list')
+    return completeAnItem();
+}
+
+function exceptionInvalidCompletionEntry(){
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('Error: Invalid entry');
+    console.log('Please try again')
+    return completeAnItem();
+}
+
+function askToCreatToDoItem(){
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
     console.log('~ Creating a new to-do item ~');
     console.log('What is the to-do item called?');
     toDoItem = prompt('> ');
-    isComplete = false;
-    toDoArray[toDoArray.length-1][0] = toDoItem;
-    toDoArray[toDoArray.length-1][1] = isComplete;
-    console.log(toDoArray);
+    return toDoItem;
 }
+
+function addItemToDoList(str){
+    if (toDoArray[0][0] === ''){
+        toDoArray[toDoArray.length-1][0] = str;
+        toDoArray[toDoArray.length-1][1] = false;
+    } else {
+        toDoArray.push([]);
+        toDoArray[toDoArray.length - 1][0] = str;
+        toDoArray[toDoArray.length - 1][1] = false;
+    }
+    
+    displayToDoList();
+    return selectAnAction();
+}
+
+function displayToDoList() {
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('You have ' + toDoArray.length + ' to-do item(s).');
+    for (i = 0; i < toDoArray.length; i++){
+        if (toDoArray[i][1] === true){
+            isComplete = 'complete';
+        } else {
+            isComplete = 'incomplete';
+        }
+        console.log(i+1 + '. [' + isComplete + '] ' + toDoArray[i][0]);
+    }
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    return;
+}
+
+function exceptionNoItems(){
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('Your to-do list is empty.');
+    console.log('Please select: [1] Create a to-do item');
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    return selectAnAction();
+}
+
+function exceptionInvalidInput(){
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    console.log('Error: Invalid entry');
+    console.log('Please try again');
+    console.log('\n');
+    console.log('==============================================');
+    console.log('\n');
+    return selectAnAction();
+}
+
+
+
+let toDoItem = '';
+
+let itemNumberString = '';
+
+let itemNumber = 0;
+
+let isComplete = '';
+
+let toDoArray = [['', false]];
+
+let userDecision = '';
+
+
+
+
+welcome();
+
+selectAnAction();
+
+userAction(userDecision);
+
+
+
