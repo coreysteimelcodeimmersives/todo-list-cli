@@ -47,7 +47,7 @@ function completeAnItem(){
         exceptionItemDoesNotExist()
     } else if (itemNumber > 0 && itemNumber <= toDoArray.length && toDoArray[itemNumber-1][1] === false){
         writeItemComplete(itemNumber);
-    } else if (toDoArray[itemNumber-1] === true){
+    } else if (toDoArray[itemNumber-1][1] === true){
         exceptionItemAlreadyComplete();
     }else if (itemNumber > toDoArray.length){
         exceptionItemDoesNotExist();
