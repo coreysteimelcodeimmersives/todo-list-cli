@@ -43,7 +43,9 @@ function completeAnItem(){
     console.log('Which to-do item would you like to complete?')
     itemNumberString = prompt('> ');
     itemNumber = Number(itemNumberString);
-    if (itemNumber > toDoArray.length){
+    if(itemNumber !== Number){
+        exceptionInvalidCompletionEntry();
+    }else if (itemNumber > toDoArray.length){
         exceptionItemDoesNotExist()
     } else if (itemNumber > 0 && itemNumber <= toDoArray.length && toDoArray[itemNumber-1][1] === false){
         writeItemComplete(itemNumber);
