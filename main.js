@@ -43,7 +43,7 @@ function completeAnItem(){
     console.log('Which to-do item would you like to complete?')
     itemNumberString = prompt('> ');
     itemNumber = Number(itemNumberString);
-    if(itemNumber !== Number){
+    if(isNaN(itemNumber)){
         exceptionInvalidCompletionEntry();
     }else if (itemNumber > toDoArray.length){
         exceptionItemDoesNotExist()
@@ -80,12 +80,6 @@ function checkIfAllItemsAreComplete(){
         if (toDoArray[i][1] === false){
             incomplete = false;
         }
-        //     break;
-        // } else if (i === toDoArray.length-1 && toDoArray[i][1] === true) {
-        //     congrats(); 
-        // } else {
-        //     congrats();
-        // }
     }
     if (incomplete === true){
         congrats();
@@ -209,14 +203,8 @@ let toDoArray = [['', false]];
 
 let userDecision = '';
 
-
-
-
 welcome();
 
 selectAnAction();
 
 userAction(userDecision);
-
-
-
