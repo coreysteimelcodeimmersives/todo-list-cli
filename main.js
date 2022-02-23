@@ -45,6 +45,8 @@ function completeAnItem(){
     itemNumber = Number(itemNumberString);
     if(isNaN(itemNumber)){
         exceptionInvalidCompletionEntry();
+    } else if (itemNumber === 0){
+        exceptionInvalidCompletionEntry();
     }else if (itemNumber > toDoArray.length){
         exceptionItemDoesNotExist()
     } else if (itemNumber > 0 && itemNumber <= toDoArray.length && toDoArray[itemNumber-1][1] === false){
