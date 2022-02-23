@@ -189,8 +189,6 @@ function exceptionInvalidInput(){
     return selectAnAction();
 }
 
-
-
 let toDoItem = '';
 
 let itemNumberString = '';
